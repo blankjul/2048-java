@@ -142,7 +142,7 @@ public class Board {
 					// merge
 					if (this.get(i, j) == lastValue) {
 						this.set(i, index - 1, lastValue + 1);
-						lastValue = lastValue + 1;
+						lastValue = 0;
 						// move left
 					} else {
 						this.set(i, index, this.get(i, j));

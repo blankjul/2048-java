@@ -26,11 +26,12 @@ public class MainFrame extends JFrame implements View {
         this.getContentPane().add(new InfoPanel());
         this.getContentPane().add(new GameFieldPanel(board, 400));
         
-		setVisible(true);
-		
+        setVisible(true);
 
 	}
 
+
+	
 
 	public void update(Board board) {
 		this.repaint();

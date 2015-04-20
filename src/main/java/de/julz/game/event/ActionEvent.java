@@ -2,7 +2,7 @@ package de.julz.game.event;
 
 import de.julz.game.model.Action;
 
-public class ActionEvent {
+public class ActionEvent extends Event {
 	
 	private Action action;
 	

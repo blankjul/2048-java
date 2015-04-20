@@ -21,17 +21,17 @@ public class Field {
 	
 	public void paint(Graphics g, int x, int y) {
 		Graphics2D g2d = (Graphics2D) g;
+		
 		RoundRectangle2D rect = new RoundRectangle2D.Double(x, y, Geometrics.FIELD_SIZE, Geometrics.FIELD_SIZE, 5, 5);
 		g2d.setColor(background);
 		g2d.fill(rect);
 		
 		if (name != null) {
-			
 			g.setFont(new Font("default", Font.BOLD, 26));
 			g.setColor(font);
 			FontMetrics fm = g.getFontMetrics();
 			int fontX = x + Geometrics.FIELD_SIZE/2 - fm.stringWidth(name) / 2;
-			int fontY = y + Geometrics.FIELD_SIZE/2 + fm.stringWidth(name) / 2; 
+			int fontY = y + Geometrics.FIELD_SIZE/2 + 10; 
 			g.drawString(name, fontX, fontY);
 		}
 	}
