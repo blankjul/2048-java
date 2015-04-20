@@ -47,7 +47,7 @@ public class Board {
 	 * Returns the value at the specific column and row
 	 * and considers if the board is transposed or inverted.
 	 */
-	protected int get(int row, int column) {
+	public int get(int row, int column) {
 		if (inverted) column = Math.abs(column - 3);
 		if (transpose) {
 			int tmp = row;
@@ -164,24 +164,28 @@ public class Board {
 	
 	/**
 	 * Performs one action. This includes the move and the new random field.
+	 * Returns true if there is a next move and the game is not finished.
 	 */
-	public void next(Action action) {
+	public boolean next(Action action) {
 		// perform the move
 		move(action);
 		
 		// switch value of empty position to 1 or 2
-		setRandomPositionNonEmpty();
-		
+		boolean next = setRandomPositionNonEmpty();
+		return next;
 	}
 	
 
-	private void setRandomPositionNonEmpty() {
+	private boolean setRandomPositionNonEmpty() {
 		List<Position> emptyFields = new ArrayList<Position>(this.getEmptyFields());
+		if (emptyFields.size() == 0) return false;
+		
 		int index = rand.nextInt(emptyFields.size());
 		Position pos = emptyFields.get(index);
 		
 		int nextValue = rand.nextFloat() < 0.9 ? 1 : 2;
 		this.set(pos.X(), pos.Y(), nextValue);
+		return true;
 		
 	}
 	
