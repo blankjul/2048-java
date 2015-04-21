@@ -31,8 +31,6 @@ public class Board {
 	private boolean inverted = false;
 	
 
-	
-
 	public Board() {
 	}
 
@@ -117,7 +115,8 @@ public class Board {
 		return sb.toString();
 	}
 
-	
+
+
 
 	protected boolean setRandomPositionNonEmpty() {
 		List<Position> emptyFields = new ArrayList<Position>(this.getEmptyFields());

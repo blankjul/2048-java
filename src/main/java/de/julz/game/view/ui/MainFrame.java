@@ -54,7 +54,7 @@ public class MainFrame extends JFrame implements EventListener {
 		} else if (event instanceof UpdateEvent) {
 			UpdateEvent e = (UpdateEvent) event;
 			game.update(e.getGame().getBoard());
-			info.update(1, 0);
+			info.update(e.getGame().getScore(), 0);
 			this.repaint();
 		} 
 	}

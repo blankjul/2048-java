@@ -65,8 +65,8 @@ public class Controller implements EventListener {
 	public void handle(Event event) {
 		if (event instanceof ActionEvent) {
 			ActionEvent actionEvent = (ActionEvent) event;
-			boolean hasNextMove = game.next(actionEvent.getAction());
-			if (!hasNextMove) {
+			game.next(actionEvent.getAction());
+			if (game.isFinished()) {
 				EventDispatcher.getInstance().notify(new GameOverEvent(game));
 			}
 			else EventDispatcher.getInstance().notify(new UpdateEvent(game));
