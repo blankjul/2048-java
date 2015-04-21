@@ -17,7 +17,7 @@ public class FieldFactory {
 		m.put(0, new Field(null, new Color(204, 192, 179), FONT_COLOR_DARK));
 		m.put(1, new Field("2", new Color(238, 228, 218), FONT_COLOR_DARK));
 		m.put(2, new Field("4", new Color(237, 224, 200), FONT_COLOR_DARK));
-		m.put(3, new Field("8", new Color(242, 177, 121), FONT_COLOR_DARK));
+		m.put(3, new Field("8", new Color(242, 177, 121), FONT_COLOR_LITE));
 		m.put(4, new Field("16", new Color(245, 149, 99), FONT_COLOR_LITE));
 		m.put(5, new Field("32", new Color(246, 124, 95), FONT_COLOR_LITE));
 		m.put(6, new Field("64", new Color(246, 94, 59), FONT_COLOR_LITE));

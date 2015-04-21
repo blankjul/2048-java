@@ -1,6 +1,8 @@
 package de.julz.game.view.ui;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -9,7 +11,6 @@ import javax.swing.JPanel;
 import de.julz.game.event.Event;
 import de.julz.game.event.EventListener;
 import de.julz.game.event.GameOverEvent;
-import de.julz.game.event.NewGameEvent;
 import de.julz.game.event.UpdateEvent;
 import de.julz.game.model.Board;
 
@@ -24,10 +25,12 @@ public class MainFrame extends JFrame implements EventListener {
 	public MainFrame(Board board) {
 		super();
 		
+		setSize(540, 720);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("2048");
 		setResizable(false);
-		setSize(540, 720);
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
