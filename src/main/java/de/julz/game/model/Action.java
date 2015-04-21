@@ -8,7 +8,6 @@ package de.julz.game.model;
 public enum Action {
 	UP, RIGHT, DOWN, LEFT;
 	
-	
 	public Action fromInt(int value) {
 		return Action.values()[value];
 	}

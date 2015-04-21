@@ -4,15 +4,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.julz.game.ai.AbstractPlayer;
-import de.julz.game.ai.CirclePlayer;
 import de.julz.game.ai.HumanPlayer;
 import de.julz.game.event.ActionEvent;
 import de.julz.game.event.Event;
 import de.julz.game.event.EventDispatcher;
 import de.julz.game.event.EventListener;
+import de.julz.game.event.GameOverEvent;
+import de.julz.game.event.UpdateEvent;
 import de.julz.game.model.Action;
 import de.julz.game.model.Game;
-import de.julz.game.view.View;
 import de.julz.game.view.ui.ArrayKeyAdapter;
 import de.julz.game.view.ui.MainFrame;
 
@@ -26,7 +26,7 @@ public class Controller implements EventListener {
 	}
 
 	private Game game;
-	private View view;
+	private MainFrame view;
 	private AbstractPlayer player;
 	private boolean isHumanPlayer = false;
 
@@ -35,11 +35,14 @@ public class Controller implements EventListener {
 		player = new HumanPlayer();
 		isHumanPlayer = player instanceof HumanPlayer;
 		
-		MainFrame f = new MainFrame(game.getBoard());
+		view = new MainFrame(game.getBoard());
 		if (isHumanPlayer) { 
-			f.addKeyListener(new ArrayKeyAdapter());
+			view.addKeyListener(new ArrayKeyAdapter());
 		}
-		view = f;
+		
+		EventDispatcher.getInstance().register(view);
+		
+		
 
 	}
 
@@ -56,17 +59,18 @@ public class Controller implements EventListener {
 				e.printStackTrace();
 			} 
 		}
-
 	}
 
+	
 	public void handle(Event event) {
-		// if there is an ActionEvent make a move with the board and update view
 		if (event instanceof ActionEvent) {
 			ActionEvent actionEvent = (ActionEvent) event;
-			game.next(actionEvent.getAction());
-			view.update(game.getBoard());
-		}
-
+			boolean hasNextMove = game.next(actionEvent.getAction());
+			if (!hasNextMove) {
+				EventDispatcher.getInstance().notify(new GameOverEvent(game));
+			}
+			else EventDispatcher.getInstance().notify(new UpdateEvent(game));
+		} 
 	}
 
 }

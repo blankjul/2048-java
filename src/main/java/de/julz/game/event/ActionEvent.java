@@ -14,5 +14,8 @@ public class ActionEvent extends Event {
 		return action;
 	}
 	
+	public String toString() {
+        return String.format("Action %s", action.toString());
+    }
 	
 }

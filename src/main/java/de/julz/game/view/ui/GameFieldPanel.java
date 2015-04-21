@@ -28,12 +28,10 @@ public class GameFieldPanel extends JPanel {
 	
 	public GameFieldPanel(Board board, int size) {
 		this.board = board;
-		addKeyListener(new ArrayKeyAdapter());
 		
 		this.size = size;
 		setSize(new Dimension(size,size));
 		fieldSize = (int) (size - 5 * FIELD_DISTANCE) / 4;
-		
 		
 		setVisible(true);
 	}

@@ -26,6 +26,12 @@ public class FieldFactory {
 		m.put(9, new Field("512", new Color(237, 200, 80), FONT_COLOR_LITE));
 		m.put(10, new Field("1024", new Color(237, 197, 63), FONT_COLOR_LITE));
 		m.put(11, new Field("2048", new Color(237, 194, 46), FONT_COLOR_LITE));
+		m.put(12, new Field("4096", Color.BLACK, FONT_COLOR_LITE));
+		m.put(13, new Field("8192", Color.BLACK, FONT_COLOR_LITE));
+		m.put(14, new Field("16384", Color.BLACK, FONT_COLOR_LITE));
+		m.put(15, new Field("33768", Color.BLACK, FONT_COLOR_LITE));
+		m.put(16, new Field("65536", Color.BLACK, FONT_COLOR_LITE));
+		m.put(17, new Field("131072", Color.BLACK, FONT_COLOR_LITE));
 
     } 
          
