@@ -57,17 +57,17 @@ public class Controller implements EventListener {
 
 	
 	public void handle(Event event) {
-		if (event instanceof GameOverEvent || event instanceof NewGameEvent) {
+		if (event instanceof NewGameEvent) {
 			game.reset();
 			EventDispatcher.getInstance().notify(new UpdateEvent(game));
 		} else if (event instanceof ActionEvent) {
 			ActionEvent actionEvent = (ActionEvent) event;
 			game.next(actionEvent.getAction());
+			EventDispatcher.getInstance().notify(new UpdateEvent(game));
 			if (game.isFinished()) {
 				EventDispatcher.getInstance().notify(new GameOverEvent());
-				
+				EventDispatcher.getInstance().notify(new UpdateEvent(game));
 			}
-			EventDispatcher.getInstance().notify(new UpdateEvent(game));
 		} 
 	}
 

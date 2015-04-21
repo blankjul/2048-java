@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import de.julz.game.event.Event;
 import de.julz.game.event.EventListener;
 import de.julz.game.event.GameOverEvent;
+import de.julz.game.event.NewGameEvent;
 import de.julz.game.event.UpdateEvent;
 import de.julz.game.model.Board;
 
