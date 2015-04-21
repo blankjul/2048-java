@@ -15,7 +15,6 @@ public class MainFrame extends JFrame implements View {
 	public MainFrame(Board board) {
 		super();
 		
-		addKeyListener(new ArrayKeyAdapter());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("2048");
         setResizable(false);
@@ -30,8 +29,6 @@ public class MainFrame extends JFrame implements View {
 
 	}
 
-
-	
 
 	public void update(Board board) {
 		this.repaint();

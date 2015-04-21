@@ -1,27 +1,48 @@
 package de.julz.game.model;
 
+
 public class Game {
+
+	private Board board;
 	
-	
-	final private Board board;
-	
-	boolean next = true;
-	
+
+
 	public Game() {
+		// create the new board
 		board = new Board();
-		board.init();
+		// set two fields non empty at the beginning
+		board.setRandomPositionNonEmpty();
+		board.setRandomPositionNonEmpty();
+	}
+
+	public Game(Board board) {
+		this.board = board;
 	}
 	
-	public boolean isFinished () {
-		return !next;
+	
+	public boolean isFinished() {
+		return board.getPossibleMoves().isEmpty();
 	}
+	
 
 	public Board getBoard() {
 		return board;
 	}
-	
-	public void next(Action action) {
-		next = board.next(action);
+
+	/**
+	 * Performs one action. This includes the move and the new random field.
+	 * Returns true if there is a next move and the game is not finished.
+	 */
+	public boolean next(Action action) {
+		// perform the move
+		this.board = board.move(action);
+		board.setRandomPositionNonEmpty();
+		
+		// check all the possible next moves
+		
+		
+		return isFinished();
 	}
 	
+
 }
