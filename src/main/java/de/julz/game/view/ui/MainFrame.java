@@ -41,7 +41,6 @@ public class MainFrame extends JFrame implements EventListener {
 		info.setBounds(20, 10, 500, 180);
 		panel.add(info);
         
-        
         setContentPane(panel);
         setVisible(true);
 

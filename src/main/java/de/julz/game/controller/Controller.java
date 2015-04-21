@@ -4,12 +4,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.julz.game.ai.AbstractPlayer;
-import de.julz.game.ai.HumanPlayer;
 import de.julz.game.event.ActionEvent;
 import de.julz.game.event.Event;
 import de.julz.game.event.EventDispatcher;
 import de.julz.game.event.EventListener;
 import de.julz.game.event.GameOverEvent;
+import de.julz.game.event.NewGameEvent;
 import de.julz.game.event.UpdateEvent;
 import de.julz.game.model.Action;
 import de.julz.game.model.Game;
@@ -25,32 +25,26 @@ public class Controller implements EventListener {
 		return singleton;
 	}
 
-	private Game game;
-	private MainFrame view;
-	private AbstractPlayer player;
-	private boolean isHumanPlayer = false;
+	private Game game = null;
+	private MainFrame view = null;
+	private AbstractPlayer player = null;
 
+	
+	
 	private Controller() {
 		game = new Game();
-		player = new HumanPlayer();
-		isHumanPlayer = player instanceof HumanPlayer;
-		
 		view = new MainFrame(game.getBoard());
-		if (isHumanPlayer) { 
-			view.addKeyListener(new ArrayKeyAdapter());
-		}
-		
-		EventDispatcher.getInstance().register(view);
-		
-		
+		if (player == null) view.addKeyListener(new ArrayKeyAdapter());
 
+		
 	}
 
 	public void start() {
 		LOGGER.log(Level.INFO, "Started Game and waiting for ActionEvents");
+		EventDispatcher.getInstance().register(view);
 		EventDispatcher.getInstance().register(this);
 		
-		while (!isHumanPlayer && !game.isFinished()) {
+		while (player != null && !game.isFinished()) {
 			Action a = player.next(game.getBoard());
 			EventDispatcher.getInstance().notify(new ActionEvent(a));
 			try {
@@ -63,13 +57,17 @@ public class Controller implements EventListener {
 
 	
 	public void handle(Event event) {
-		if (event instanceof ActionEvent) {
+		if (event instanceof GameOverEvent || event instanceof NewGameEvent) {
+			game.reset();
+			EventDispatcher.getInstance().notify(new UpdateEvent(game));
+		} else if (event instanceof ActionEvent) {
 			ActionEvent actionEvent = (ActionEvent) event;
 			game.next(actionEvent.getAction());
 			if (game.isFinished()) {
-				EventDispatcher.getInstance().notify(new GameOverEvent(game));
+				EventDispatcher.getInstance().notify(new GameOverEvent());
+				
 			}
-			else EventDispatcher.getInstance().notify(new UpdateEvent(game));
+			EventDispatcher.getInstance().notify(new UpdateEvent(game));
 		} 
 	}
 

@@ -9,6 +9,8 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.JPanel;
 
 import de.julz.game.model.Board;
+import de.julz.game.view.ui.components.Field;
+import de.julz.game.view.ui.components.FieldFactory;
 
 public class GameFieldPanel extends JPanel {
 

@@ -1,4 +1,4 @@
-package de.julz.game.view.ui;
+package de.julz.game.view.ui.components;
 
 public class Geometrics {
 	

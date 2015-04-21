@@ -3,9 +3,18 @@ package de.julz.game.view.ui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+
+import de.julz.game.event.EventDispatcher;
+import de.julz.game.event.NewGameEvent;
+import de.julz.game.view.ui.components.InfoBox;
 
 public class InfoPanel extends JPanel {
 
@@ -42,6 +51,22 @@ public class InfoPanel extends JPanel {
 		infoBest.setFont(new Font("default", Font.PLAIN, 16));
 		add(infoBest);
 		
+		JButton btn = new JButton("New Game");
+		btn.setBounds(360,130,130,40);
+		btn.setFont(new Font("default", Font.BOLD, 14));
+		btn.setBackground(new Color(143,122,102));
+		btn.setForeground(new Color(250,250,250));
+		btn.setFocusPainted(false);
+		btn.setFocusable(false);
+		Border emptyBorder = BorderFactory.createEmptyBorder();
+		btn.setBorder(emptyBorder);
+		btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+            	EventDispatcher.getInstance().notify(new NewGameEvent());
+            }
+        }); 
+		add(btn);
 		
 		setVisible(true);
 	}

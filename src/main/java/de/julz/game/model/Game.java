@@ -8,16 +8,19 @@ public class Game {
 	
 
 	public Game() {
-		currentState = new GameState(new Board());
-		currentState.getBoard().setRandomPositionNonEmpty();
-		currentState.getBoard().setRandomPositionNonEmpty();
+		reset();
 	}
 	
 	public Game(Board board) {
 		currentState = new GameState(board);
 	}
-
 	
+	public void reset() {
+		currentState = new GameState(new Board());
+		currentState.getBoard().setRandomPositionNonEmpty();
+		currentState.getBoard().setRandomPositionNonEmpty();
+	}
+
 	public Board getBoard() {
 		return currentState.getBoard();
 	}

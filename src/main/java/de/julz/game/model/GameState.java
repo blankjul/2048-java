@@ -84,7 +84,7 @@ public class GameState {
 		Board dest = new Board();
 		traverseForMove(src, dest, action);
 		
-		int score = 0;
+		int score = this.getScore();
 
 		// for each row
 		for (int i = 0; i < Board.FIELD_SIZE; i++) {
