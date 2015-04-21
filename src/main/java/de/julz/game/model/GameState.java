@@ -3,7 +3,7 @@ package de.julz.game.model;
 import java.util.HashSet;
 import java.util.Set;
 
-public class GameState {
+public class GameState{
 	
 	private Board board;
 	
@@ -117,6 +117,9 @@ public class GameState {
 
 		return new GameState(dest, score, action);
 	}
+
+
+
 
 	
 }

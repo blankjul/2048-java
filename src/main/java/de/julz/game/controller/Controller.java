@@ -57,7 +57,7 @@ public class Controller implements EventListener {
 		
 		do  {
 			if (player != null) {
-				game.run();
+				game.play();
 			}
 		} while (Game2048.visual);
 		

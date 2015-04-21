@@ -24,6 +24,8 @@ public class InfoPanel extends JPanel {
 	
 	private InfoBox infoBest;
 	
+	private JLabel lblGameOver;
+	
 	public InfoPanel() {
 		setSize(new Dimension(200,200));
 		setLayout(null);
@@ -34,6 +36,13 @@ public class InfoPanel extends JPanel {
 		title.setForeground(new Color(120,110,100));
 		title.setFont(new Font("default", Font.BOLD, 40));
 		add(title);
+		
+		lblGameOver = new JLabel("GAME OVER");
+		lblGameOver.setBounds(0,55,260,100);
+		lblGameOver.setForeground(new Color(120,110,100));
+		lblGameOver.setFont(new Font("default", Font.BOLD, 30));
+		lblGameOver.setVisible(false);
+		add(lblGameOver);
 		
 		JLabel subtitle = new JLabel("<html>Join the numbers and get to the <b>2048 tile!</b></html>");
 		subtitle.setBounds(0,100,400,100);
@@ -72,9 +81,10 @@ public class InfoPanel extends JPanel {
 	}
 	
 	
-	public void update(int score, int best) {
+	public void update(int score, int best, boolean isGameOver) {
 		infoScore.setValue(String.valueOf(score));
 		infoBest.setValue(String.valueOf(best));
+		lblGameOver.setVisible(isGameOver);
 	}
 
 }

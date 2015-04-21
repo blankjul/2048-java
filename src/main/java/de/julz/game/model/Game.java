@@ -1,11 +1,13 @@
 package de.julz.game.model;
 
+import java.util.concurrent.Callable;
+
 import de.julz.game.Game2048;
 import de.julz.game.ai.AbstractPlayer;
 import de.julz.game.event.ActionEvent;
 import de.julz.game.event.EventDispatcher;
 
-public class Game implements Runnable {
+public class Game implements Callable<GameState>{
 
 	// the current board
 	private GameState currentState;
@@ -55,18 +57,23 @@ public class Game implements Runnable {
 		return currentState;
 	}
 
-	public void run() {
+	public void play() {
 		while (!isFinished()) {
 			Action a = player.next(getCurrentState(), getCurrentState().getPossibleMoves());
-			EventDispatcher.getInstance().notify(new ActionEvent(a));
-			
+			currentState = currentState.next(a);
 			if (visual)
+				EventDispatcher.getInstance().notify(new ActionEvent(a));
 				try {
 					Thread.sleep(Game2048.visualDelay);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 		}
+	}
+
+	public GameState call() throws Exception {
+		play();
+		return currentState;
 	}
 
 }

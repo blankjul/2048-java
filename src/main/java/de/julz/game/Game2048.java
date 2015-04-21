@@ -12,6 +12,7 @@ public class Game2048 {
 	
 	public static boolean logging = true;
 	
+	//public static AbstractPlayer player = null;
 	public static AbstractPlayer player = new GreedyPlayer();
 
 	public static void main(String[] args) {

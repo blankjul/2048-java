@@ -52,12 +52,10 @@ public class MainFrame extends JFrame implements EventListener {
 
 
 	public void handle(Event event) {
-		if (event instanceof GameOverEvent) {
-			JOptionPane.showMessageDialog(this, "Game Over.");
-		} else if (event instanceof UpdateEvent) {
+		if (event instanceof UpdateEvent) {
 			UpdateEvent e = (UpdateEvent) event;
 			game.update(e.getGame().getBoard());
-			info.update(e.getGame().getScore(), 0);
+			info.update(e.getGame().getScore(), 0, e.getGame().isFinished());
 			this.repaint();
 		} 
 	}
