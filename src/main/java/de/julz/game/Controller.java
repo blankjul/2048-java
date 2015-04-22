@@ -2,11 +2,11 @@ package de.julz.game;
 
 import java.util.Set;
 
-import de.julz.game.ai.AbstractPlayer;
 import de.julz.game.event.CloseEvent;
 import de.julz.game.event.Event;
 import de.julz.game.event.EventDispatcher;
 import de.julz.game.event.EventListener;
+import de.julz.game.event.GameOverEvent;
 import de.julz.game.event.NewGameEvent;
 import de.julz.game.event.UpdateEvent;
 import de.julz.game.model.Action;
@@ -24,14 +24,12 @@ public class Controller implements EventListener {
 	}
 
 	public static enum Status {
-		GAME_OVER, PLAYING, START_NEW_GAME, CLOSE
+		GAME_OVER, PLAYING, START_NEW_GAME
 	}
 
 	public KeyInput input = null;
 	private Game game = null;
 	private MainFrame view = null;
-	private AbstractPlayer player = null;
-	private int bestScore;
 	private Resources resources;
 	private Status status;
 
@@ -42,18 +40,13 @@ public class Controller implements EventListener {
 		resources = new Resources();
 		resources.load();
 
-		player = Game2048.player;
-		game = new Game(player);
-
 		if (Game2048.visual) {
-			view = new MainFrame(game.getBoard());
+			view = new MainFrame();
 			view.addKeyListener(input);
 			EventDispatcher.getInstance().register(view);
 		}
 
-		status = Status.PLAYING;
-
-		bestScore = resources.getScore();
+		status = Status.START_NEW_GAME;
 	}
 
 	public void start() {
@@ -61,55 +54,55 @@ public class Controller implements EventListener {
 		// register controller as client
 		EventDispatcher.getInstance().register(this);
 
-		GameState lastState = game.getCurrentState();
-		EventDispatcher.getInstance().notify(new UpdateEvent(game.getCurrentState(), bestScore));
-
 		while (true) {
-
-			if (status == Status.START_NEW_GAME) {
-				game = new Game(player);
-				status = Status.PLAYING;
-				EventDispatcher.getInstance().notify(new UpdateEvent(game.getCurrentState(), bestScore));
 			
+			if (status == Status.START_NEW_GAME) {
+				
+				game = new Game(Game2048.player);
+				status = Status.PLAYING;
+				EventDispatcher.getInstance().notify(new UpdateEvent(game.getCurrentState(), resources.getScore()));
+				
+			} else if (status == Status.GAME_OVER) {
+				
+				view.waitForPaint();
+				continue;
+				
 			} else if (status == Status.PLAYING) {
-
-				Set<Action> nextMoves = lastState.getPossibleMoves();
-				Action a = player.next(lastState, nextMoves);
+				
+				GameState state = game.getCurrentState();
+				Set<Action> nextMoves = state.getPossibleMoves();
+				Action a = Game2048.player.next(state, nextMoves);
 
 				// check if this move is allowed
-				if (!nextMoves.contains(a))
-					continue;
+				if (!nextMoves.contains(a)) continue;
 
 				// get the next game state
-				GameState state = game.next(a);
+				GameState next = game.next(a);
 
-				// check if an update event should be fired
-				if (!lastState.equals(state)) {
-					checkBestScore();
-					EventDispatcher.getInstance().notify(new UpdateEvent(game.getCurrentState(), bestScore));
+				// if the state change
+				if (!state.equals(next)) {
+					// set best score
+					resources.setScore(Math.max(resources.getScore(), game.getScore()));
+					// fire an update event
+					EventDispatcher.getInstance().notify(new UpdateEvent(game.getCurrentState(), resources.getScore()));
 				}
 
 				// save the last state
-				game.setCurrentState(state);
-				lastState = state;
-
+				game.setCurrentState(next);
+				
 				// set to game over if this is the case
-				if (game.isFinished())
-					status = Status.GAME_OVER;
+				if (game.isFinished()) status = Status.GAME_OVER;
+				
 			}
 		}
 
 	}
 
-	private void checkBestScore() {
-		if (game.getScore() > bestScore) {
-			bestScore = game.getScore();
-			resources.setScore(bestScore);
-		}
-	}
 
 	public void handle(Event event) {
-		if (event instanceof NewGameEvent) {
+		if (event instanceof GameOverEvent) {
+			status = Status.GAME_OVER;
+		} else if (event instanceof NewGameEvent) {
 			status = Status.START_NEW_GAME;
 		}
 		else if (event instanceof CloseEvent) {
@@ -117,10 +110,7 @@ public class Controller implements EventListener {
 			System.exit(0); 
 		}
 	}
+	
 
-	public void resetScore() {
-		bestScore = 0;
-		resources.setScore(0);
-	}
 
 }

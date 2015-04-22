@@ -28,9 +28,7 @@ public class GameFieldPanel extends JPanel {
 	protected int size = -1;
 	
 	
-	public GameFieldPanel(Board board, int size) {
-		this.board = board;
-		
+	public GameFieldPanel(int size) {
 		this.size = size;
 		setSize(new Dimension(size,size));
 		fieldSize = (int) (size - 5 * FIELD_DISTANCE) / 4;
@@ -55,7 +53,8 @@ public class GameFieldPanel extends JPanel {
 		for (int j = 0; j < Board.FIELD_SIZE; j++) {
 			int x = FIELD_DISTANCE;
 			for (int i = 0; i < Board.FIELD_SIZE; i++) {
-				Field field = FieldFactory.getInstance().getField(board.get(j, i));
+				int fieldID = (board == null) ? 0 : board.get(j, i);
+				Field field = FieldFactory.getInstance().getField(fieldID);
 				field.paint(g2d, x, y);
 				x += FIELD_DISTANCE + fieldSize;
 			}

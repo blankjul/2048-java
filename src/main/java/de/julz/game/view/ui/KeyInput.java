@@ -4,7 +4,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
-import de.julz.game.Controller;
 import de.julz.game.model.Action;
 
 public class KeyInput extends KeyAdapter {
@@ -25,11 +24,6 @@ public class KeyInput extends KeyAdapter {
     @Override
     public void keyReleased(KeyEvent event) {
         int keyCode = event.getKeyCode();
-        
-        if (keyCode == 82) {
-        	Controller.getInstance().resetScore();
-        	System.out.println("RESET");
-        }
         
         if (map.containsKey(keyCode)) {
         	currentAction = map.get(keyCode);

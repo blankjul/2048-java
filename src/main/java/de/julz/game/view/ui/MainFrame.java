@@ -1,6 +1,5 @@
 package de.julz.game.view.ui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -9,7 +8,6 @@ import java.awt.event.WindowEvent;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JFrame;
-import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -18,7 +16,6 @@ import de.julz.game.event.Event;
 import de.julz.game.event.EventDispatcher;
 import de.julz.game.event.EventListener;
 import de.julz.game.event.UpdateEvent;
-import de.julz.game.model.Board;
 
 public class MainFrame extends JFrame implements EventListener {
 
@@ -32,7 +29,7 @@ public class MainFrame extends JFrame implements EventListener {
 
     
 	
-	public MainFrame(Board board) {
+	public MainFrame() {
 		super();
 		
 		setSize(540, 720);
@@ -52,7 +49,7 @@ public class MainFrame extends JFrame implements EventListener {
 		panel.setBackground(new Color(250,250,240));
 		
 		// adjust the game
-		game = new GameFieldPanel(board, 500);
+		game = new GameFieldPanel(500);
 		game.setBounds(20, 200, 500, 500);
         panel.add(game);
 		
@@ -79,7 +76,7 @@ public class MainFrame extends JFrame implements EventListener {
 	}
 	
 	// this is a hack method to wait for the UI
-	private void waitForPaint() {
+	public void waitForPaint() {
 		final Runnable updateEvent = new Runnable() {
 			public void run() {
 			}
