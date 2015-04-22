@@ -31,9 +31,7 @@ public class Game implements Callable<GameState>{
 	}
 
 	public void reset() {
-		currentState = new GameState(new Board());
-		currentState.getBoard().setRandomPositionNonEmpty();
-		currentState.getBoard().setRandomPositionNonEmpty();
+		currentState = new GameState(new Board()).setRandomPositionNonEmpty().setRandomPositionNonEmpty();
 	}
 
 	public Board getBoard() {
@@ -75,5 +73,6 @@ public class Game implements Callable<GameState>{
 		play();
 		return currentState;
 	}
-
+	
+	
 }

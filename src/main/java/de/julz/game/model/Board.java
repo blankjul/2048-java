@@ -1,10 +1,7 @@
 package de.julz.game.model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 public class Board {
@@ -15,25 +12,31 @@ public class Board {
 	final public static int FIELD_SIZE = 4;
 
 	/**
-	 * private random generator
-	 */
-	final private static Random rand = new Random();
-
-	/**
 	 * The 3D array which contains all the values.
 	 */
 	private int[][] board = new int[FIELD_SIZE][FIELD_SIZE];
 
-	// boolean if the board transposition is enabled
+	/**
+	 *  boolean if the board transposition is enabled
+	 */
 	private boolean transpose = false;
 
-	// boolean if the board is mirror inverted or not
+	/**
+	 * boolean if the board is mirror inverted or not
+	 */
 	private boolean inverted = false;
 	
-
+	
+	/**
+	 * Create an empty board.
+	 */
 	public Board() {
 	}
 
+	/**
+	 * Create a board with predefined values.
+	 * @param board that is initialized
+	 */
 	public Board(int[][] board) {
 		this();
 		setArray(board);
@@ -116,21 +119,6 @@ public class Board {
 	}
 
 
-
-
-	protected boolean setRandomPositionNonEmpty() {
-		List<Position> emptyFields = new ArrayList<Position>(this.getEmptyFields());
-		if (emptyFields.size() == 0)
-			return false;
-
-		int index = rand.nextInt(emptyFields.size());
-		Position pos = emptyFields.get(index);
-
-		int nextValue = rand.nextFloat() < 0.9 ? 1 : 2;
-		this.set(pos.X(), pos.Y(), nextValue);
-		return true;
-
-	}
 
 	protected Set<Position> getFields(FilterInterface filterFunction) {
 		Set<Position> emptyFields = new HashSet<Position>();

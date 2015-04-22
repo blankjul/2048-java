@@ -6,7 +6,7 @@ package de.julz.game.model;
  * has to be returned by the game AI.
  */
 public enum Action {
-	UP, RIGHT, DOWN, LEFT;
+	UP, RIGHT, DOWN, LEFT, NIL;
 	
 	public Action fromInt(int value) {
 		return Action.values()[value];
