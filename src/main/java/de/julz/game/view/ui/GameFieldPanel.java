@@ -67,7 +67,6 @@ public class GameFieldPanel extends JPanel {
 
 	public void update(Board board) {
 		this.board = board;
-		this.repaint();
 	}
 	
 

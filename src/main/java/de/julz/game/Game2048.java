@@ -2,15 +2,18 @@ package de.julz.game;
 
 import de.julz.game.ai.AbstractPlayer;
 import de.julz.game.ai.HumanPlayer;
-import de.julz.game.controller.Controller;
 
 public class Game2048 {
 
+	/**
+     * Milliseconds allowed per controller action.
+     */
+    public static int ACTION_TIME = 40;
+    
+	
 	public static boolean visual = true;
 	
 	public static int visualDelay = 10;
-	
-	public static boolean logging = true;
 	
 	public static AbstractPlayer player = new HumanPlayer();
 

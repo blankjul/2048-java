@@ -86,5 +86,7 @@ public class InfoPanel extends JPanel {
 		infoBest.setValue(String.valueOf(best));
 		lblGameOver.setVisible(isGameOver);
 	}
+	
+	
 
 }

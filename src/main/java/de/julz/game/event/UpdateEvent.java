@@ -6,8 +6,11 @@ public class UpdateEvent extends Event {
 	
 	private GameState state;
 	
-	public UpdateEvent(GameState state) {
+	private int bestScore;
+	
+	public UpdateEvent(GameState state, int bestScore) {
 		this.state = state;
+		this.bestScore = bestScore;
 	}
 
 	public GameState getGame() {
@@ -17,6 +20,10 @@ public class UpdateEvent extends Event {
 	public String toString() {
         return String.format("Event to Update UI to \n%s", state.getBoard().toString());
     }
+
+	public int getBestScore() {
+		return bestScore;
+	}
 	
 	
 }

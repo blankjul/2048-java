@@ -31,7 +31,7 @@ public class Game2048Simulation {
 		ExecutorService threadPool = Executors.newFixedThreadPool(4);
 		CompletionService<GameState> pool = new ExecutorCompletionService<GameState>(threadPool);
 		for (int i = 0; i < ITERATIONS; i++) {
-			pool.submit(new Game(new GreedyPlayer(), false));
+			pool.submit(new Game(new GreedyPlayer()));
 		}
 		for (int i = 0; i < ITERATIONS; i++) {
 			try {
