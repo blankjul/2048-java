@@ -112,15 +112,18 @@ public class GameState {
 	/**
 	 * Performs one action. This includes the move and the new random field.
 	 * Returns true if there is a next move and the game is not finished.
+	 * 
+	 * If action is Action.NIL nothing the instance itself is returned.
 	 */
 	public GameState next(Action action) {
 		// perform the move
-		GameState state = move(action).setRandomPositionNonEmpty();
-		return state;
+		if (action == Action.NIL) return this;
+		else return move(action).setRandomPositionNonEmpty();
 	}
 
 	/**
 	 * Move the current board to the up, right, down or left.
+	 * If the Action.Nil is the parameter the instance itself is returned.
 	 * 
 	 * @param action
 	 *            which gives the direction to what direction the board should
@@ -128,6 +131,8 @@ public class GameState {
 	 * @return the next GameState after this move
 	 */
 	public GameState move(Action action) {
+		
+		if (action == Action.NIL) return this;
 
 		Board src = this.board;
 		Board dest = new Board();
@@ -174,6 +179,7 @@ public class GameState {
 	
 	/**
 	 * Also creates a new GameState by setting one field random for 0.9 to 2 and for 0.1 to 4.
+	 * 
 	 * If the board has no empty field the is no new GameState and the object itself is returned.
 	 * 
 	 * @return a new GameState with one more random value.
@@ -192,6 +198,21 @@ public class GameState {
 		int nextValue = rand.nextFloat() < 0.9 ? 1 : 2;
 		b.set(pos.X(), pos.Y(), nextValue);
 		return new GameState(b, score, lastAction);
+	}
+	
+	@Override
+	public boolean equals(Object other){
+	    if (other == null) return false;
+	    if (other == this) return true;
+	    if (!(other instanceof GameState))return false;
+	    GameState state = (GameState)other;
+	    if (board.equals(state.getBoard()) && score == state.getScore() && 
+	    		lastAction.equals(state.getLastAction())) return true;
+	    else return false;
+	}
+	
+	public boolean hastNextState() {
+		return !getPossibleMoves().isEmpty();
 	}
 	
 

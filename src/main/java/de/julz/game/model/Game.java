@@ -42,12 +42,16 @@ public class Game implements Callable<GameState>{
 		return currentState;
 	}
 
+	public void setCurrentState(GameState currentState) {
+		this.currentState = currentState;
+	}
+
 	public int getScore() {
 		return currentState.getScore();
 	}
 
 	public boolean isFinished() {
-		return currentState.getPossibleMoves().isEmpty();
+		return !currentState.hastNextState();
 	}
 
 	public GameState next(Action action) {

@@ -1,21 +1,21 @@
 package de.julz.game.event;
 
-import de.julz.game.model.Game;
+import de.julz.game.model.GameState;
 
 public class UpdateEvent extends Event {
 	
-	private Game game;
+	private GameState state;
 	
-	public UpdateEvent(Game game) {
-		this.game = game;
+	public UpdateEvent(GameState state) {
+		this.state = state;
 	}
 
-	public Game getGame() {
-		return game;
+	public GameState getGame() {
+		return state;
 	}
 	
 	public String toString() {
-        return String.format("Event to Update UI to \n%s", game.getBoard().toString());
+        return String.format("Event to Update UI to \n%s", state.getBoard().toString());
     }
 	
 	

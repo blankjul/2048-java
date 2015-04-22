@@ -1,8 +1,6 @@
 package de.julz.game.model;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -23,6 +21,12 @@ public class GameStateTest {
 		assertEquals(0, state.getBoard().getNonEmptyFields().size());
 	}
 	
+	@Test
+	public void Move_Nil() {
+		GameState state = new GameState(new Board(new int[][]{{1,0,0,1},{1,1,1,1},{4,4,0,0},{1,0,0,0}}));
+		Board result = state.move(Action.NIL).getBoard();
+		assertArrayEquals(new int[][]{{1,0,0,1},{1,1,1,1},{4,4,0,0},{1,0,0,0}}, result.getArray());
+	}
 	
 	@Test
 	public void Move_Left() {
@@ -91,7 +95,19 @@ public class GameStateTest {
 	}
 	
 	
+	@Test
+	public void Equal_True() {
+		GameState state = new GameState(new Board(new int[][]{{1,2,0,0},{4,3,0,0},{1,2,0,0},{4,3,0,0}}), 5, Action.NIL);
+		GameState other = new GameState(new Board(new int[][]{{1,2,0,0},{4,3,0,0},{1,2,0,0},{4,3,0,0}}), 5, Action.NIL);
+		assertTrue(state.equals(other));
+	}
 	
+	@Test
+	public void Equal_False() {
+		GameState state = new GameState(new Board(new int[][]{{1,2,0,0},{4,3,0,0},{1,2,0,0},{4,3,0,0}}), 5, Action.NIL);
+		GameState other = new GameState(new Board(new int[][]{{1,2,0,0},{4,3,0,0},{1,2,0,0},{4,3,0,0}}), 4, Action.NIL);
+		assertFalse(state.equals(other));
+	}
 	
 
 }
