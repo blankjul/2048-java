@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.google.gson.Gson;
+
 public class Board {
 
 	/**
@@ -107,7 +109,7 @@ public class Board {
 
 	@Override
 	public String toString() {
-		StringBuffer sb = new StringBuffer();
+		StringBuffer sb = new StringBuffer("\n----------------\n");
 		for (int i = 0; i < FIELD_SIZE; i++) {
 			for (int j = 0; j < FIELD_SIZE; j++) {
 				sb.append(board[i][j]);
@@ -115,6 +117,7 @@ public class Board {
 			}
 			sb.append("\n");
 		}
+		sb.append("----------------\n");
 		return sb.toString();
 	}
 
@@ -170,5 +173,16 @@ public class Board {
 		Board board = (Board) other;
 		return Arrays.deepEquals(getArray(), board.getArray());
 	}
+	
+	public static Board fromJSON(String json) {
+		int[][] array = new Gson().fromJson(json, int[][].class);
+		return new Board(array);
+	}
+	
+	public static String toJSON(Board b) {
+		return new Gson().toJson(b.getArray());
+	}
+	
+	
 
 }

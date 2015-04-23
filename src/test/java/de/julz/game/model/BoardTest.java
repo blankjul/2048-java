@@ -8,6 +8,18 @@ import org.junit.Test;
 public class BoardTest {
 
 	
+	@Test
+	public void Create_From_Json() {
+		
+		Board board = new Board(new int[][]{{1,0,0,1},{1,1,1,1},{4,4,0,0},{1,0,0,0}});
+		Board board2 = Board.fromJSON("[[1,0,0,1],"
+								     + "[1,1,1,1],"
+								     + "[4,4,0,0],"
+								     + "[1,0,0,0]]");
+		assertTrue(board.equals(board2));
+	}
+	
+	
 	
 	@Test
 	public void Board_Equals_True() {
@@ -24,6 +36,8 @@ public class BoardTest {
 		boolean equal = board1.equals(board2);
 		assertFalse(equal);
 	}
+	
+	
 	
 	
 	

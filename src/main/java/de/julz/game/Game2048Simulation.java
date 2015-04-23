@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 
 import de.julz.game.ai.AbstractPlayer;
 import de.julz.game.ai.CirclePlayer;
-import de.julz.game.ai.GreedyPlayer;
+import de.julz.game.ai.GreedyScorePlayer;
 import de.julz.game.ai.RandomPlayer;
 import de.julz.game.model.Game;
 import de.julz.game.model.GameState;
@@ -20,7 +20,7 @@ import de.julz.game.model.GameState;
 public class Game2048Simulation {
 
 	final public static List<AbstractPlayer> playerList = new ArrayList<AbstractPlayer>(Arrays.asList(
-			new GreedyPlayer(), new RandomPlayer(), new CirclePlayer()));
+			new GreedyScorePlayer(), new RandomPlayer(), new CirclePlayer()));
 
 	final public static int ITERATIONS = 40;
 
@@ -31,7 +31,7 @@ public class Game2048Simulation {
 		ExecutorService threadPool = Executors.newFixedThreadPool(4);
 		CompletionService<GameState> pool = new ExecutorCompletionService<GameState>(threadPool);
 		for (int i = 0; i < ITERATIONS; i++) {
-			pool.submit(new Game(new GreedyPlayer()));
+			pool.submit(new Game(new GreedyScorePlayer()));
 		}
 		for (int i = 0; i < ITERATIONS; i++) {
 			try {

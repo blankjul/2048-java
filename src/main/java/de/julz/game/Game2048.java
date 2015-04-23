@@ -1,7 +1,7 @@
 package de.julz.game;
 
 import de.julz.game.ai.AbstractPlayer;
-import de.julz.game.ai.HumanPlayer;
+import de.julz.game.ai.RandomPlayer;
 
 public class Game2048 {
 
@@ -10,12 +10,9 @@ public class Game2048 {
      */
     public static int ACTION_TIME = 40;
     
-	
 	public static boolean visual = true;
 	
-	public static int visualDelay = 10;
-	
-	public static AbstractPlayer player = new HumanPlayer();
+	public static AbstractPlayer player = new RandomPlayer();
 
 	public static void main(String[] args) {
 		Controller.getInstance().start();

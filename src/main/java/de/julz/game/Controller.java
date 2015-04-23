@@ -36,7 +36,6 @@ public class Controller implements EventListener {
 	private Controller() {
 
 		input = new KeyInput();
-
 		resources = new Resources();
 		resources.load();
 
@@ -78,6 +77,7 @@ public class Controller implements EventListener {
 
 				// get the next game state
 				GameState next = game.next(a);
+				
 
 				// if the state change
 				if (!state.equals(next)) {

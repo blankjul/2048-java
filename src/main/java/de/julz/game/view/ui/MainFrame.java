@@ -32,7 +32,7 @@ public class MainFrame extends JFrame implements EventListener {
 	public MainFrame() {
 		super();
 		
-		setSize(540, 720);
+		setSize(540, 750);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		setTitle("2048");
