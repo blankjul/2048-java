@@ -174,6 +174,11 @@ public class Board {
 		return Arrays.deepEquals(getArray(), board.getArray());
 	}
 	
+	@Override
+	public int hashCode() {
+		return java.util.Arrays.deepHashCode(board);
+	}
+	
 	public static Board fromJSON(String json) {
 		int[][] array = new Gson().fromJson(json, int[][].class);
 		return new Board(array);

@@ -11,18 +11,17 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import de.julz.game.ai.AbstractPlayer;
-import de.julz.game.ai.CirclePlayer;
-import de.julz.game.ai.GreedyScorePlayer;
+import de.julz.game.ai.MaximalExpectation;
+import de.julz.game.ai.NoHardCodePlayer;
 import de.julz.game.ai.RandomPlayer;
 import de.julz.game.model.Game;
 import de.julz.game.model.GameState;
 
 public class Game2048Simulation {
 
-	final public static List<AbstractPlayer> playerList = new ArrayList<AbstractPlayer>(Arrays.asList(
-			new GreedyScorePlayer(), new RandomPlayer(), new CirclePlayer()));
+	final public static List<AbstractPlayer> playerList = new ArrayList<AbstractPlayer>(Arrays.asList(new RandomPlayer(), new NoHardCodePlayer(), new MaximalExpectation()));
 
-	final public static int ITERATIONS = 40;
+	final public static int ITERATIONS = 1000;
 
 	
 	public static DoubleSummaryStatistics getPlayerEvaluation(AbstractPlayer player) {
@@ -31,7 +30,7 @@ public class Game2048Simulation {
 		ExecutorService threadPool = Executors.newFixedThreadPool(4);
 		CompletionService<GameState> pool = new ExecutorCompletionService<GameState>(threadPool);
 		for (int i = 0; i < ITERATIONS; i++) {
-			pool.submit(new Game(new GreedyScorePlayer()));
+			pool.submit(new Game(player));
 		}
 		for (int i = 0; i < ITERATIONS; i++) {
 			try {
@@ -51,7 +50,7 @@ public class Game2048Simulation {
 	public static void main(String[] args) {
 		for (AbstractPlayer player : playerList) {
 			DoubleSummaryStatistics statScore = getPlayerEvaluation(player);
-			System.out.println(String.format("%s, mean:%s", player.getClass().getSimpleName(), statScore.getAverage()));
+			System.out.println(String.format("%s, mean: %s, max: %s", player.getClass().getSimpleName(), statScore.getAverage(), statScore.getMax()));
 		}
 
 	}

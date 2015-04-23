@@ -56,7 +56,7 @@ public class Game implements Callable<GameState>{
 
 	public GameState play() {
 		while (!isFinished()) {
-			Action a = player.next(getCurrentState(), getCurrentState().getPossibleMoves());
+			Action a = player.next(currentState, currentState.getPossibleMoves());
 			GameState next = currentState.next(a);
 			currentState = next;
 		}

@@ -117,13 +117,15 @@ public class GameState {
 	 */
 	public GameState next(Action action) {
 		// perform the move
-		if (action == Action.NIL) return this;
-		else return move(action).setRandomPositionNonEmpty();
+		if (action == Action.NIL)
+			return this;
+		else
+			return move(action).setRandomPositionNonEmpty();
 	}
 
 	/**
-	 * Move the current board to the up, right, down or left.
-	 * If the Action.Nil is the parameter the instance itself is returned.
+	 * Move the current board to the up, right, down or left. If the Action.Nil
+	 * is the parameter the instance itself is returned.
 	 * 
 	 * @param action
 	 *            which gives the direction to what direction the board should
@@ -131,12 +133,13 @@ public class GameState {
 	 * @return the next GameState after this move
 	 */
 	public GameState move(Action action) {
-		
-		if (action == Action.NIL) return this;
+
+		if (action == Action.NIL)
+			return this;
 
 		Board src = this.board;
 		Board dest = new Board();
-		
+
 		traverseForMove(src, action);
 		traverseForMove(dest, action);
 
@@ -175,12 +178,12 @@ public class GameState {
 		return new GameState(dest, score, action);
 	}
 
-	
-	
 	/**
-	 * Also creates a new GameState by setting one field random for 0.9 to 2 and for 0.1 to 4.
+	 * Also creates a new GameState by setting one field random for 0.9 to 2 and
+	 * for 0.1 to 4.
 	 * 
-	 * If the board has no empty field the is no new GameState and the object itself is returned.
+	 * If the board has no empty field the is no new GameState and the object
+	 * itself is returned.
 	 * 
 	 * @return a new GameState with one more random value.
 	 */
@@ -191,7 +194,7 @@ public class GameState {
 		List<Position> emptyFields = new ArrayList<Position>(b.getEmptyFields());
 		if (emptyFields.isEmpty())
 			return this;
-		
+
 		int index = rand.nextInt(emptyFields.size());
 		Position pos = emptyFields.get(index);
 
@@ -199,28 +202,38 @@ public class GameState {
 		b.set(pos.X(), pos.Y(), nextValue);
 		return new GameState(b, score, lastAction);
 	}
-	
+
 	@Override
-	public boolean equals(Object other){
-	    if (other == null) return false;
-	    if (other == this) return true;
-	    if (!(other instanceof GameState))return false;
-	    GameState state = (GameState)other;
-	    if (board.equals(state.getBoard()) && score == state.getScore() && 
-	    		lastAction.equals(state.getLastAction())) return true;
-	    else return false;
+	public boolean equals(Object other) {
+		if (other == null)
+			return false;
+		if (other == this)
+			return true;
+		if (!(other instanceof GameState))
+			return false;
+		GameState state = (GameState) other;
+		if (board.equals(state.getBoard()))
+			return true;
+		else
+			return false;
 	}
-	
+
+	@Override
+	public int hashCode() {
+		return board.hashCode();
+	}
+
 	public boolean hastNextState() {
 		return !getPossibleMoves().isEmpty();
 	}
-	
 
 	// traverse for the move action
 	private void traverseForMove(Board board, Action action) {
 		// traverse the board temporarily that it is always a move to the left
-		if (action == Action.UP || action == Action.DOWN) board.transpose();
-		if (action == Action.RIGHT || action == Action.DOWN)board.invert();
+		if (action == Action.UP || action == Action.DOWN)
+			board.transpose();
+		if (action == Action.RIGHT || action == Action.DOWN)
+			board.invert();
 	}
 
 }
