@@ -18,16 +18,6 @@ public class Board {
 	 */
 	private int[][] board = new int[FIELD_SIZE][FIELD_SIZE];
 
-	/**
-	 *  boolean if the board transposition is enabled
-	 */
-	private boolean transpose = false;
-
-	/**
-	 * boolean if the board is mirror inverted or not
-	 */
-	private boolean inverted = false;
-	
 	
 	/**
 	 * Create an empty board.
@@ -43,15 +33,24 @@ public class Board {
 		this();
 		setArray(board);
 	}
-
+	
 	/**
 	 * Returns the value at the specific column and row and considers if the
 	 * board is transposed or inverted.
 	 */
 	public int get(int row, int column) {
+		return board[row][column];
+	}
+	
+
+	/**
+	 * Returns the value at the specific column and row and considers if the
+	 * board is transposed or inverted.
+	 */
+	public int get(int row, int column, boolean inverted, boolean transposed) {
 		if (inverted)
 			column = Math.abs(column - 3);
-		if (transpose) {
+		if (transposed) {
 			int tmp = row;
 			row = column;
 			column = tmp;
@@ -68,9 +67,17 @@ public class Board {
 	 * transposed or inverted.
 	 */
 	protected void set(int row, int column, int value) {
+		board[row][column] = value;
+	}
+	
+	/**
+	 * Sets the value at the column or position and considers if the board is
+	 * transposed or inverted.
+	 */
+	protected void set(int row, int column, int value, boolean inverted, boolean transposed) {
 		if (inverted)
 			column = Math.abs(column - 3);
-		if (transpose) {
+		if (transposed) {
 			int tmp = row;
 			row = column;
 			column = tmp;
@@ -78,15 +85,6 @@ public class Board {
 		board[row][column] = value;
 	}
 
-
-	protected void transpose() {
-		transpose = !transpose;
-	}
-
-
-	protected void invert() {
-		inverted = !inverted;
-	}
 
 	/**
 	 * Returns the array representation of the board.
@@ -109,20 +107,6 @@ public class Board {
 			return false;
 		this.board = board;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		StringBuffer sb = new StringBuffer("\n----------------\n");
-		for (int i = 0; i < FIELD_SIZE; i++) {
-			for (int j = 0; j < FIELD_SIZE; j++) {
-				sb.append(board[i][j]);
-				sb.append(" ");
-			}
-			sb.append("\n");
-		}
-		sb.append("----------------\n");
-		return sb.toString();
 	}
 
 
@@ -165,6 +149,29 @@ public class Board {
 	private interface FilterInterface {
 		public boolean filter(int value);
 	}
+	
+	public static Board fromJSON(String json) {
+		int[][] array = new Gson().fromJson(json, int[][].class);
+		return new Board(array);
+	}
+	
+	public static String toJSON(Board b) {
+		return new Gson().toJson(b.getArray());
+	}
+	
+	/**
+	 * Deep copy the whole board.
+	 * @return a new board that is equal to the old
+	 */
+	public Board copy() {
+		int[][] result = new int[FIELD_SIZE][FIELD_SIZE];
+		for (int i = 0; i < FIELD_SIZE; i++) {
+			for (int j = 0; j < FIELD_SIZE; j++) {
+				result[i][j] = this.get(i, j);
+			}
+		}
+		return new Board(result);
+	}
 
 	@Override
 	public boolean equals(Object other) {
@@ -183,14 +190,22 @@ public class Board {
 		return java.util.Arrays.deepHashCode(board);
 	}
 	
-	public static Board fromJSON(String json) {
-		int[][] array = new Gson().fromJson(json, int[][].class);
-		return new Board(array);
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer("\n----------------\n");
+		for (int i = 0; i < FIELD_SIZE; i++) {
+			for (int j = 0; j < FIELD_SIZE; j++) {
+				sb.append(board[i][j]);
+				sb.append(" ");
+			}
+			sb.append("\n");
+		}
+		sb.append("----------------\n");
+		return sb.toString();
 	}
+
 	
-	public static String toJSON(Board b) {
-		return new Gson().toJson(b.getArray());
-	}
+
 	
 	
 

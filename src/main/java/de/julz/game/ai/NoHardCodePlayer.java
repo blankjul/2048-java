@@ -1,13 +1,13 @@
 package de.julz.game.ai;
 
 import java.util.ArrayList;
-import java.util.DoubleSummaryStatistics;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
 import de.julz.game.ai.evaluation.Evaluation;
 import de.julz.game.ai.evaluation.ScoreEvalution;
+import de.julz.game.model.AbstractPlayer;
 import de.julz.game.model.Action;
 import de.julz.game.model.GameState;
 
@@ -33,7 +33,7 @@ public class NoHardCodePlayer extends AbstractPlayer {
 			for (int i = 0; i < NUM_RUNS; i++) {
 				
 				// randomRun -> perform the first move
-				GameState nextState = state.next(a);
+				GameState nextState = state.createNextGameState(a);
 				
 				// roll out randomly to the end
 				while (nextState.hastNextState()) {
@@ -43,7 +43,7 @@ public class NoHardCodePlayer extends AbstractPlayer {
 					int index = new Random().nextInt(list.size());
 					Action nextAction = list.get(index);
 					
-					nextState = nextState.next(nextAction);
+					nextState = nextState.createNextGameState(nextAction);
 				}
 				score += eval.getScore(nextState);
 				//score += nextState.getScore();

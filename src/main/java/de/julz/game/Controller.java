@@ -59,7 +59,7 @@ public class Controller implements EventListener {
 				
 				game = new Game(Game2048.player);
 				status = Status.PLAYING;
-				EventDispatcher.getInstance().notify(new UpdateEvent(game.getCurrentState(), resources.getScore()));
+				EventDispatcher.getInstance().notify(new UpdateEvent(game.getState(), resources.getScore()));
 				
 			} else if (status == Status.GAME_OVER) {
 				
@@ -68,7 +68,7 @@ public class Controller implements EventListener {
 				
 			} else if (status == Status.PLAYING) {
 				
-				GameState state = game.getCurrentState();
+				GameState state = game.getState().copy();
 				Set<Action> nextMoves = state.getPossibleMoves();
 				Action a = Game2048.player.next(state, nextMoves);
 
@@ -76,7 +76,8 @@ public class Controller implements EventListener {
 				if (!nextMoves.contains(a)) continue;
 
 				// get the next game state
-				GameState next = game.next(a);
+				game.next(a);
+				GameState next = game.getState();
 				
 
 				// if the state change
@@ -84,7 +85,7 @@ public class Controller implements EventListener {
 					// set best score
 					resources.setScore(Math.max(resources.getScore(), game.getScore()));
 					// fire an update event
-					EventDispatcher.getInstance().notify(new UpdateEvent(game.getCurrentState(), resources.getScore()));
+					EventDispatcher.getInstance().notify(new UpdateEvent(game.getState(), resources.getScore()));
 				}
 
 				// save the last state

@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import de.julz.game.ai.mcts.GenericNode;
 import de.julz.game.ai.mcts.MCTSNode;
 import de.julz.game.ai.mcts.MostVisitedNodeComparator;
+import de.julz.game.model.AbstractPlayer;
 import de.julz.game.model.Action;
 import de.julz.game.model.GameState;
 import de.julz.game.util.Helper;
@@ -114,7 +115,7 @@ public class MCTSPlayer extends AbstractPlayer {
 		int level = n.getLevel();
 		while (level <= maxDepth) {
 			Action a = Helper.getRandomEntry(state.getPossibleMoves());
-			GameState next = state.next(a);
+			GameState next = state.createNextGameState(a);
 			
 			if (!state.hastNextState()) heuristic += -10;
 			else heuristic += next.getScore() - state.getScore();

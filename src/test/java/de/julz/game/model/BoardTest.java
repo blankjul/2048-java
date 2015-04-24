@@ -9,6 +9,22 @@ public class BoardTest {
 
 	
 	@Test
+	public void Copy() {
+		Board board = Board.fromJSON("[[1,0,0,1],"
+								     + "[1,1,1,1],"
+								     + "[4,4,0,0],"
+								     + "[1,0,0,0]]");
+		Board copy = board.copy();
+		assertTrue(board != copy);
+		assertTrue(board.equals(copy));
+		
+		board.set(3, 3, 1);
+		assertFalse(board.equals(copy));
+	}
+	
+	
+	
+	@Test
 	public void Create_From_Json() {
 		
 		Board board = new Board(new int[][]{{1,0,0,1},{1,1,1,1},{4,4,0,0},{1,0,0,0}});

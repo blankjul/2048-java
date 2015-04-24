@@ -81,7 +81,7 @@ public class GenericNode<T>  {
 	 */
 	public GenericNode<T> getChild(Action action) {
 		// create the next state
-		GameState next = this.state.next(action);
+		GameState next = state.createNextGameState(action);
 
 		// create the new path
 		ArrayList<Action> pathOfChild = new ArrayList<Action>(getPath());

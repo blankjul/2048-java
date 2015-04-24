@@ -9,7 +9,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-import de.julz.game.ai.AbstractPlayer;
+import de.julz.game.model.AbstractPlayer;
 import de.julz.game.model.Action;
 import de.julz.game.model.Board;
 import de.julz.game.model.GameState;

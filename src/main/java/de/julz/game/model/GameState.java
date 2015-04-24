@@ -18,22 +18,22 @@ public class GameState {
 	/**
 	 * The current board at this state
 	 */
-	final private Board board;
+	private Board board;
 
 	/**
 	 * The current store of the player
 	 */
-	final private int score;
+	private int score;
 
 	/**
 	 * The last action that was executed
 	 */
-	final private Action lastAction;
+	private Action lastAction;
 
 	/**
 	 * private random generator
 	 */
-	final private static Random rand = new Random();
+	private static Random rand = new Random();
 
 	/**
 	 * Create a new GameState with an empty board.
@@ -91,6 +91,9 @@ public class GameState {
 		return lastAction;
 	}
 
+
+	
+	
 	/**
 	 * Return all possible moves in this state which will lead new GameState.
 	 * Action.NIL will not exist in the result set, because you always will have
@@ -102,63 +105,44 @@ public class GameState {
 	public Set<Action> getPossibleMoves() {
 		// else set calculate the values by looking at movements of all moves.
 		Set<Action> nextMoves = new HashSet<Action>();
-		for (Action action : Action.values()) {
-			if (action != Action.NIL && !move(action).getBoard().equals(this.board))
-				nextMoves.add(action);
-		}
+		if (getPossibleMoves(board,false,false)) nextMoves.add(Action.LEFT);
+		if (getPossibleMoves(board,true,false)) nextMoves.add(Action.RIGHT);
+		if (getPossibleMoves(board,false,true)) nextMoves.add(Action.UP);
+		if (getPossibleMoves(board,true,true)) nextMoves.add(Action.DOWN);
 		return nextMoves;
 	}
 
-	public Set<Action> getPossibleMovesFast() {
-		// else set calculate the values by looking at movements of all moves.
-		Set<Action> nextMoves = new HashSet<Action>();
-
-		for (Action action : Action.values()) {
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-		}
-		return nextMoves;
-	}
-	
-
-	private boolean getPossibleMovesFastHelper(Board b) {
+	private boolean getPossibleMoves(Board b, boolean inverted, boolean transposed) {
 		// for each row
 		for (int i = 0; i < Board.FIELD_SIZE; i++) {
 			int last = -1;
 			// for each field in that column
 			for (int j = 0; j < Board.FIELD_SIZE; j++) {
-				int value = b.get(i, j);
-				if (last == value || (last == 0 && value != 0)) return true;
-				last = b.get(i, j);
+				int value = b.get(i, j, inverted, transposed);
+				// if it is a merge (equality but not zero) or there is a value after a zero
+				if ((value != 0 && last == value) || (last == 0 && value != 0))
+					return true;
+				last = value;
 			}
 		}
 		return false;
 	}
 
+	
+	
 	/**
 	 * Performs one action. This includes the move and the new random field.
 	 * Returns true if there is a next move and the game is not finished.
-	 * 
-	 * If action is Action.NIL nothing the instance itself is returned.
 	 */
-	public GameState next(Action action) {
-		// perform the move
-		if (action == Action.NIL)
-			return this;
-		else
-			return move(action).setRandomPositionNonEmpty();
+	public void next(Action action) {
+		if (action != Action.NIL) {
+			move(action);
+			setRandomPositionNonEmpty();
+		}
 	}
-
+	
+	
+	
 	/**
 	 * Move the current board to the up, right, down or left. If the Action.Nil
 	 * is the parameter the instance itself is returned.
@@ -168,18 +152,22 @@ public class GameState {
 	 *            be moved.
 	 * @return the next GameState after this move
 	 */
-	public GameState move(Action action) {
+	public void move(Action a) {
+		move(board,a,true);
+	}
+	
+	
+	private void move(Board board, Action action, boolean scoring) {
 
-		if (action == Action.NIL)
-			return this;
+		if (action == Action.NIL) return;
 
-		Board src = this.board;
-		Board dest = new Board();
+		boolean inverted = false;
+		boolean transposed = false;
 
-		traverseForMove(src, action);
-		traverseForMove(dest, action);
-
-		int score = this.getScore();
+		if (action == Action.UP || action == Action.DOWN)
+			transposed = true;
+		if (action == Action.RIGHT || action == Action.DOWN)
+			inverted = true;
 
 		// for each row
 		for (int i = 0; i < Board.FIELD_SIZE; i++) {
@@ -187,32 +175,37 @@ public class GameState {
 			int lastValue = 0;
 			// for each field in that column
 			for (int j = 0; j < Board.FIELD_SIZE; j++) {
+
+				// get the value at the specific field
+				int value = board.get(i, j, inverted, transposed);
+				board.set(i, j, 0, inverted, transposed);
+
 				// move the current value to the last
-				if (src.get(i, j) != 0) {
+				if (value != 0) {
 					// merge
-					if (src.get(i, j) == lastValue) {
-						dest.set(i, index - 1, lastValue + 1);
-						score += Math.pow(2, lastValue + 1);
+					if (value == lastValue) {
+						board.set(i, index - 1, lastValue + 1, inverted, transposed);
+						if (scoring) score += Math.pow(2, lastValue + 1);
 						lastValue = 0;
 						// move left
 					} else {
-						dest.set(i, index, src.get(i, j));
-						lastValue = src.get(i, j);
+						board.set(i, index, value, inverted, transposed);
+						lastValue = value;
 						++index;
 					}
 				}
 			}
-			for (int x = index; x < Board.FIELD_SIZE; x++) {
-				dest.set(i, x, 0);
-			}
 		}
-
-		// traverse the board temporarily that it is always a move to the left
-		traverseForMove(src, action);
-		traverseForMove(dest, action);
-
-		return new GameState(dest, score, action);
 	}
+	
+	
+	public GameState createNextGameState(Action a) {
+		GameState nextState = copy();
+		nextState.move(a);
+		return nextState;
+	}
+	
+	
 
 	/**
 	 * Also creates a new GameState by setting one field random for 0.9 to 2 and
@@ -223,22 +216,29 @@ public class GameState {
 	 * 
 	 * @return a new GameState with one more random value.
 	 */
-	public GameState setRandomPositionNonEmpty() {
+	public void setRandomPositionNonEmpty() {
 
-		Board b = new Board(board.getArray());
-
-		List<Position> emptyFields = new ArrayList<Position>(b.getEmptyFields());
+		List<Position> emptyFields = new ArrayList<Position>(board.getEmptyFields());
 		if (emptyFields.isEmpty())
-			return this;
+			return;
 
 		int index = rand.nextInt(emptyFields.size());
 		Position pos = emptyFields.get(index);
 
 		int nextValue = rand.nextFloat() < 0.9 ? 1 : 2;
-		b.set(pos.X(), pos.Y(), nextValue);
-		return new GameState(b, score, lastAction);
+		board.set(pos.X(), pos.Y(), nextValue);
 	}
+	
+	
+	/**
+	 * Deep copy the whole GameState.
+	 */
+	public GameState copy() {
+		return new GameState(board.copy(), score, lastAction);
+	}
+	
 
+	
 	@Override
 	public boolean equals(Object other) {
 		if (other == null)
@@ -261,15 +261,6 @@ public class GameState {
 
 	public boolean hastNextState() {
 		return !getPossibleMoves().isEmpty();
-	}
-
-	// traverse for the move action
-	private void traverseForMove(Board board, Action action) {
-		// traverse the board temporarily that it is always a move to the left
-		if (action == Action.UP || action == Action.DOWN)
-			board.transpose();
-		if (action == Action.RIGHT || action == Action.DOWN)
-			board.invert();
 	}
 
 }

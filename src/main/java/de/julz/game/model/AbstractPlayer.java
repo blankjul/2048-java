@@ -1,9 +1,6 @@
-package de.julz.game.ai;
+package de.julz.game.model;
 
 import java.util.Set;
-
-import de.julz.game.model.Action;
-import de.julz.game.model.GameState;
 
 public abstract class AbstractPlayer {
 

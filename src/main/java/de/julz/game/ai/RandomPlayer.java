@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import de.julz.game.model.AbstractPlayer;
 import de.julz.game.model.Action;
 import de.julz.game.model.GameState;
 

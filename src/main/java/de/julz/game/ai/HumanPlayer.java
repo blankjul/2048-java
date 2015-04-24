@@ -3,6 +3,7 @@ package de.julz.game.ai;
 import java.util.Set;
 
 import de.julz.game.Controller;
+import de.julz.game.model.AbstractPlayer;
 import de.julz.game.model.Action;
 import de.julz.game.model.GameState;
 import de.julz.game.view.ui.KeyInput;

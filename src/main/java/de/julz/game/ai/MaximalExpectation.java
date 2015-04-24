@@ -5,6 +5,7 @@ import java.util.Set;
 
 import de.julz.game.ai.evaluation.Evaluation;
 import de.julz.game.ai.evaluation.ScoreEvalution;
+import de.julz.game.model.AbstractPlayer;
 import de.julz.game.model.Action;
 import de.julz.game.model.GameState;
 

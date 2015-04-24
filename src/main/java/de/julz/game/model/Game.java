@@ -2,8 +2,6 @@ package de.julz.game.model;
 
 import java.util.concurrent.Callable;
 
-import de.julz.game.ai.AbstractPlayer;
-
 public class Game implements Callable<GameState>{
 
 	// the current board
@@ -26,14 +24,17 @@ public class Game implements Callable<GameState>{
 	}
 
 	public void reset() {
-		currentState = new GameState(new Board()).setRandomPositionNonEmpty().setRandomPositionNonEmpty();
+		Board b = new Board();
+		currentState = new GameState(b);
+		currentState.setRandomPositionNonEmpty();
+		currentState.setRandomPositionNonEmpty();
 	}
 
 	public Board getBoard() {
 		return currentState.getBoard();
 	}
 
-	public GameState getCurrentState() {
+	public GameState getState() {
 		return currentState;
 	}
 
@@ -49,16 +50,14 @@ public class Game implements Callable<GameState>{
 		return !currentState.hastNextState();
 	}
 
-	public GameState next(Action action) {
-		currentState = currentState.next(action);
-		return currentState;
+	public void next(Action action) {
+		currentState.next(action);
 	}
 
 	public GameState play() {
 		while (!isFinished()) {
 			Action a = player.next(currentState, currentState.getPossibleMoves());
-			GameState next = currentState.next(a);
-			currentState = next;
+			currentState.next(a);
 		}
 		return currentState;
 	}

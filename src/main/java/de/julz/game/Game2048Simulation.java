@@ -10,10 +10,10 @@ import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import de.julz.game.ai.AbstractPlayer;
 import de.julz.game.ai.MaximalExpectation;
 import de.julz.game.ai.NoHardCodePlayer;
 import de.julz.game.ai.RandomPlayer;
+import de.julz.game.model.AbstractPlayer;
 import de.julz.game.model.Game;
 import de.julz.game.model.GameState;
 

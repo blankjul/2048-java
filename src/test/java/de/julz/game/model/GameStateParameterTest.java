@@ -21,7 +21,6 @@ public class GameStateParameterTest {
 	    public static Collection<Object[]> data() {
 	    	
 	    	List<Object[]> list = new ArrayList<Object[]>();
-	    	/*
 	    	list.add(new Object[] {Board.fromJSON("[[1,0,0,1],"
 											     + "[1,1,1,1],"
 											     + "[4,4,0,0],"
@@ -128,8 +127,8 @@ public class GameStateParameterTest {
 	    	list.add(new Object[] {Board.fromJSON("[[0,1,1,3],[0,1,2,7],[0,0,0,8],[1,7,0,0]]")});
 	    	list.add(new Object[] {Board.fromJSON("[[9,1,0,0],[0,0,0,3],[7,0,0,1],[8,8,5,0]]")});
 	    	list.add(new Object[] {Board.fromJSON("[[8,4,0,3],[5,6,9,0],[2,0,4,3],[1,0,0,5]]")});
-			*/
-	    	
+			
+	    
 	        return list;
 	    }
 
@@ -143,13 +142,20 @@ public class GameStateParameterTest {
 
 
 		@Test
-	    public void test() {
+	    public void correctMoveTest() {
 			for (Action a : Action.values()) {
-				Board expected = Eval.move(board, a);
-				Board result = new GameState(board).move(a).getBoard();
+				Board expected = Eval.move(board.copy(), a);
+				Board result = new GameState(board.copy()).createNextGameState(a).getBoard();
 				assertEquals(expected, result);
 			}
 	    }
+		
+		@Test
+	    public void possibleMovesTest() {
+			GameState state = new GameState(board.copy());
+			assertEquals(GameStateTest.getPossibleMoves(state), state.getPossibleMoves());
+	    }
+	    
 	    
 	    
 

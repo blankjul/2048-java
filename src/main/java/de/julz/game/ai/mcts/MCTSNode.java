@@ -267,7 +267,7 @@ public class MCTSNode extends GenericNode<Object> {
 	 */
 	public GameState simulate(GameState state) {
 		for (Action a : history) {
-			state = state.next(a);
+			state = state.createNextGameState(a);
 		}
 		return state;
 	}
