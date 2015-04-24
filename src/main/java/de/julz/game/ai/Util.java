@@ -33,7 +33,7 @@ public class Util {
 	}
 
 	public static Map<GameState, Double> allNextStates(GameState state, Action a) {
-		state = state.next(a);
+		state = state.move(a);
 		return allNextStates(state);
 	}
 

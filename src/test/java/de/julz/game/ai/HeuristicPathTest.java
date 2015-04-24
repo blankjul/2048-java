@@ -31,7 +31,7 @@ public class HeuristicPathTest {
 		
 
 		
-		assertEquals(8, new PathHeuristicEvaluation().getDistance(b1, b2));
+		assertEquals(2, new PathHeuristicEvaluation().getDistance(b1, b2));
 		
 	}
 	

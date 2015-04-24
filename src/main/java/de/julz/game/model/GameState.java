@@ -109,6 +109,42 @@ public class GameState {
 		return nextMoves;
 	}
 
+	public Set<Action> getPossibleMovesFast() {
+		// else set calculate the values by looking at movements of all moves.
+		Set<Action> nextMoves = new HashSet<Action>();
+
+		for (Action action : Action.values()) {
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		}
+		return nextMoves;
+	}
+	
+
+	private boolean getPossibleMovesFastHelper(Board b) {
+		// for each row
+		for (int i = 0; i < Board.FIELD_SIZE; i++) {
+			int last = -1;
+			// for each field in that column
+			for (int j = 0; j < Board.FIELD_SIZE; j++) {
+				int value = b.get(i, j);
+				if (last == value || (last == 0 && value != 0)) return true;
+				last = b.get(i, j);
+			}
+		}
+		return false;
+	}
+
 	/**
 	 * Performs one action. This includes the move and the new random field.
 	 * Returns true if there is a next move and the game is not finished.

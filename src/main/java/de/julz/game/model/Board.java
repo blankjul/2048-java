@@ -58,6 +58,10 @@ public class Board {
 		}
 		return board[row][column];
 	}
+	
+	
+	
+	
 
 	/**
 	 * Sets the value at the column or position and considers if the board is

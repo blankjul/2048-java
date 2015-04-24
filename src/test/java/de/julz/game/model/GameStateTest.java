@@ -150,7 +150,7 @@ public class GameStateTest {
 	@Test
 	public void Equal_False() {
 		GameState state = new GameState(new Board(new int[][]{{1,2,0,0},{4,3,0,0},{1,2,0,0},{4,3,0,0}}), 5, Action.NIL);
-		GameState other = new GameState(new Board(new int[][]{{1,2,0,0},{4,3,0,0},{1,2,0,0},{4,3,0,0}}), 4, Action.NIL);
+		GameState other = new GameState(new Board(new int[][]{{1,1,0,0},{4,3,0,0},{1,2,0,0},{4,3,0,0}}), 5, Action.NIL);
 		assertFalse(state.equals(other));
 	}
 	

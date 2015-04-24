@@ -21,11 +21,12 @@ public class GameStateParameterTest {
 	    public static Collection<Object[]> data() {
 	    	
 	    	List<Object[]> list = new ArrayList<Object[]>();
-	    	
+	    	/*
 	    	list.add(new Object[] {Board.fromJSON("[[1,0,0,1],"
 											     + "[1,1,1,1],"
 											     + "[4,4,0,0],"
 											     + "[1,0,0,0]]")});
+	    	
 	    	
 	    	list.add(new Object[] {Board.fromJSON("[[1,3,0,9],[4,0,0,0],[7,9,3,0],[2,0,5,5]]")});
 	    	list.add(new Object[] {Board.fromJSON("[[2,0,0,7],[6,0,5,8],[0,0,0,5],[0,0,5,0]]")});
@@ -127,7 +128,7 @@ public class GameStateParameterTest {
 	    	list.add(new Object[] {Board.fromJSON("[[0,1,1,3],[0,1,2,7],[0,0,0,8],[1,7,0,0]]")});
 	    	list.add(new Object[] {Board.fromJSON("[[9,1,0,0],[0,0,0,3],[7,0,0,1],[8,8,5,0]]")});
 	    	list.add(new Object[] {Board.fromJSON("[[8,4,0,3],[5,6,9,0],[2,0,4,3],[1,0,0,5]]")});
-
+			*/
 	    	
 	        return list;
 	    }

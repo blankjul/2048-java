@@ -4,15 +4,15 @@ import java.util.Map;
 import java.util.Set;
 
 import de.julz.game.ai.evaluation.Evaluation;
-import de.julz.game.ai.evaluation.PathHeuristicEvaluation;
+import de.julz.game.ai.evaluation.ScoreEvalution;
 import de.julz.game.model.Action;
 import de.julz.game.model.GameState;
 
 public class MaximalExpectation extends AbstractPlayer {
 
-	private Evaluation eval = new PathHeuristicEvaluation();
+	private Evaluation eval = new ScoreEvalution();
 	
-	private int maxDepth = 2;
+	private int maxDepth = 4;
 
 	@Override
 	public Action next(GameState state, Set<Action> actions) {
@@ -45,7 +45,7 @@ public class MaximalExpectation extends AbstractPlayer {
 			GameState probState = entry.getKey();
 			double prob = entry.getValue();
 			double evalScore = 0;
-			if (depth == 1) evalScore = eval.getScore(probState);
+			if (depth == 1) evalScore += eval.getScore(probState);
 			else {
 				for (Action nextAction : probState.getPossibleMoves()) {
 					evalScore += getExpectation(probState, nextAction, depth-1);

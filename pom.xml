@@ -22,6 +22,11 @@
   	  <artifactId>gson</artifactId>
 	  <version>1.7.1</version>
     </dependency>
+    <dependency>
+<groupId>com.googlecode.junit-toolbox</groupId>
+<artifactId>junit-toolbox</artifactId>
+<version>1.5</version>
+</dependency>
   </dependencies>
 
 <build>
