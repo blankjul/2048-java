@@ -12,9 +12,9 @@ import de.julz.game.model.Position;
 
 public class ExpectationEvaluation extends Evaluation{
 	
-	private int maxDepth;
+	private int maxDepth = 1;
 	
-	private Evaluation eval;
+	private Evaluation eval = new ScoreEvalution();
 	
 
 	public static double getExpectation(GameState state, Action a, int depth, Evaluation eval) {

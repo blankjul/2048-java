@@ -9,7 +9,7 @@ public class Game2048 {
 	/*
 	 * CirclePlayer, ExpectMaxPlayer, NoHardCodePlayer, GreedyPlayer
 	 */
-	public final static String PLAYER = "de.julz.game.ai.GreedyPlayer";
+	public final static String PLAYER = "de.julz.game.ai.EvolutionPlayer";
 
 	public static AbstractPlayer player;
 
