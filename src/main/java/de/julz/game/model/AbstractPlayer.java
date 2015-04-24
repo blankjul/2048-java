@@ -6,4 +6,6 @@ public abstract class AbstractPlayer {
 
 	public abstract Action next(GameState state, Set<Action> actions);
 	
+	
+	
 }

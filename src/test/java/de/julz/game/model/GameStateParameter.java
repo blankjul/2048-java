@@ -14,7 +14,7 @@ import org.junit.runners.Parameterized.Parameters;
 import de.julz.game.model.util.Eval;
 
 @RunWith(Parameterized.class)
-public class GameStateParameterTest {
+public class GameStateParameter {
 	
 
 	    @Parameters
@@ -135,7 +135,7 @@ public class GameStateParameterTest {
 	    private Board board;
 
 
-	    public GameStateParameterTest(Board board) {
+	    public GameStateParameter(Board board) {
 			super();
 			this.board = board;
 		}

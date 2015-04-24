@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import de.julz.game.ai.evaluation.Evaluation;
 import de.julz.game.ai.evaluation.ScoreEvalution;
 import de.julz.game.model.AbstractPlayer;
 import de.julz.game.model.Action;
@@ -13,9 +12,7 @@ import de.julz.game.model.GameState;
 
 public class NoHardCodePlayer extends AbstractPlayer {
 
-	private static final int NUM_RUNS = 10;
-	
-	private Evaluation eval = new ScoreEvalution();
+	private static final int NUM_RUNS = 1000;
 	
 	@Override
 	public Action next(GameState state, Set<Action> actions) {
@@ -43,10 +40,10 @@ public class NoHardCodePlayer extends AbstractPlayer {
 					int index = new Random().nextInt(list.size());
 					Action nextAction = list.get(index);
 					
-					nextState = nextState.createNextGameState(nextAction);
+					nextState.next(nextAction);
 				}
-				score += eval.getScore(nextState);
-				//score += nextState.getScore();
+				
+				score += new ScoreEvalution().getScore(nextState);
 				
 			}
 			

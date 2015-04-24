@@ -7,10 +7,11 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import de.julz.game.ai.evaluation.ExpectationEvaluation;
 import de.julz.game.model.Board;
 import de.julz.game.model.GameState;
 
-public class PlayerUtilTest {
+public class ExpectationEvaluationTest {
 
 	
 
@@ -62,7 +63,7 @@ public class PlayerUtilTest {
 											     + "[1,2,3,4],"
 											     + "[4,3,0,2]]")),
 											        0.05 );
-		Map<GameState,Double> result = Util.allNextStates(new GameState(b));
+		Map<GameState,Double> result = ExpectationEvaluation.allNextStates(new GameState(b));
 		assertEquals(expected, result);
 		
 	}

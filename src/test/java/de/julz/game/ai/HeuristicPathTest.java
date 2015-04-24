@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import de.julz.game.ai.evaluation.PathHeuristicEvaluation;
+import de.julz.game.ai.evaluation.PathEvaluation;
 import de.julz.game.model.Board;
 import de.julz.game.model.GameState;
 
@@ -19,19 +19,20 @@ public class HeuristicPathTest {
 	@Test
 	public void getDistanceTest() {
 		
-		Board b1 =  Board.fromJSON(   "[[1,0,0,0],"
+		Board b1 = Board.fromJSON(   "[[3,2,1,0],"
+									+ "[0,0,0,0],"
+									+ "[0,0,0,0],"
+									+ "[0,0,0,0]]");
+		
+		
+		Board b2 =  Board.fromJSON(   "[[1,0,0,0],"
 								     + "[0,0,2,0],"
 								     + "[1,0,0,0],"
 								     + "[0,0,0,0]]");
 	
-		Board b2 = Board.fromJSON("[[3,2,1,0],"
-							     + "[0,0,0,0],"
-							     + "[0,0,0,0],"
-							     + "[0,0,0,0]]");
-		
 
 		
-		assertEquals(2, new PathHeuristicEvaluation().getDistance(b1, b2));
+		assertEquals(5, PathEvaluation.getDistance(b1, b2));
 		
 	}
 	
@@ -53,7 +54,7 @@ public class HeuristicPathTest {
 											     + "[0,0,0,0]]")));
 		
 
-		Set<GameState> result = new PathHeuristicEvaluation().getOptimalStates(state);
+		Set<GameState> result = PathEvaluation.getOptimalStates(state);
 		assertEquals(expected, result);
 		
 	}

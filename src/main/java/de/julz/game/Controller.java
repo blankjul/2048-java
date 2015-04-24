@@ -70,7 +70,7 @@ public class Controller implements EventListener {
 				
 				GameState state = game.getState().copy();
 				Set<Action> nextMoves = state.getPossibleMoves();
-				Action a = Game2048.player.next(state, nextMoves);
+				Action a = Game2048.player.next(state.copy(), nextMoves);
 
 				// check if this move is allowed
 				if (!nextMoves.contains(a)) continue;

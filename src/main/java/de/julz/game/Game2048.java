@@ -1,21 +1,33 @@
 package de.julz.game;
 
-import de.julz.game.ai.CirclePlayer;
 import de.julz.game.model.AbstractPlayer;
 
 public class Game2048 {
 
-	/**
-     * Milliseconds allowed per controller action.
-     */
-    public static int ACTION_TIME = 40;
-    
 	public static boolean visual = true;
-	
-	public static AbstractPlayer player = new CirclePlayer();
+
+	/*
+	 * CirclePlayer, ExpectMaxPlayer, NoHardCodePlayer, GreedyPlayer
+	 */
+	public final static String PLAYER = "de.julz.game.ai.GreedyPlayer";
+
+	public static AbstractPlayer player;
 
 	public static void main(String[] args) {
-		Controller.getInstance().start();
+
+		Class<?> clazz;
+		try {
+			clazz = Class.forName(PLAYER);
+			Object obj = clazz.newInstance();
+			player = (AbstractPlayer) obj;
+			Controller.getInstance().start();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -2,12 +2,15 @@ package de.julz.game.ai.evaluation;
 
 import de.julz.game.model.GameState;
 
-public class ScoreEvalution extends Evaluation{
+public class EmptyFieldEvalution extends Evaluation{
 
 	
+
 	@Override
 	public double getScore(GameState state) {
-		return state.getScore();
+		return state.getBoard().getEmptyFields().size();
 	}
+
+	
 
 }

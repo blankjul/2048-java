@@ -135,7 +135,8 @@ public class GameState {
 	 * Returns true if there is a next move and the game is not finished.
 	 */
 	public void next(Action action) {
-		if (action != Action.NIL) {
+		lastAction = action;
+		if (action != null && action != Action.NIL) {
 			move(action);
 			setRandomPositionNonEmpty();
 		}
@@ -153,13 +154,13 @@ public class GameState {
 	 * @return the next GameState after this move
 	 */
 	public void move(Action a) {
-		move(board,a,true);
+		move(this.board,a);
 	}
 	
 	
-	private void move(Board board, Action action, boolean scoring) {
+	private void move(Board board, Action action) {
 
-		if (action == Action.NIL) return;
+		if (action == null || action == Action.NIL) return;
 
 		boolean inverted = false;
 		boolean transposed = false;
@@ -185,7 +186,7 @@ public class GameState {
 					// merge
 					if (value == lastValue) {
 						board.set(i, index - 1, lastValue + 1, inverted, transposed);
-						if (scoring) score += Math.pow(2, lastValue + 1);
+						score += Math.pow(2, lastValue + 1);
 						lastValue = 0;
 						// move left
 					} else {
