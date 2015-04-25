@@ -7,7 +7,7 @@ public class Game2048 {
 	public static boolean visual = true;
 
 	/*
-	 * CirclePlayer, ExpectMaxPlayer, NoHardCodePlayer, GreedyPlayer
+	 * CirclePlayer, ExpectMaxPlayer, NoHardCodePlayer, GreedyPlayer, EvolutionPlayer
 	 */
 	public final static String PLAYER = "de.julz.game.ai.EvolutionPlayer";
 

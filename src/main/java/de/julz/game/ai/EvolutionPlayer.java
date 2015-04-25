@@ -29,10 +29,10 @@ public class EvolutionPlayer extends AbstractPlayer {
 	private int numFittest = 10;
 
 	/** number of generations that were applied. */
-	private int numGeneration = 1000;
+	private int numGeneration = 2000;
 
 	/** The path size */
-	private int pathLength = 40;
+	private int pathLength = 10;
 	
 	/** the current population */
 	private ArrayList<EvolutionaryNode> population = null;
@@ -52,12 +52,13 @@ public class EvolutionPlayer extends AbstractPlayer {
 		
 		for (int i = 0; i < numGeneration; i++) {
 			nextGen();
-			//System.out.println("------------------");
-			//System.out.println("GENERATION: " + (i + 1));
-			//System.out.println("------------------");
-			//print();
 		}
-		
+		/*
+		System.out.println("------------------");
+		System.out.println("RUN");
+		System.out.println("------------------");
+		print();
+		*/
 		return population.get(0).getFirstAction();
 	}
 
@@ -100,7 +101,6 @@ public class EvolutionPlayer extends AbstractPlayer {
 						tmp.add(candidate);
 				}
 				EvolutionaryNode second = Helper.getRandomEntry(tmp);
-
 				result = selected.crossover(second);
 			}
 			nextPool.add(result);

@@ -115,12 +115,18 @@ public class EvolutionaryNode extends GenericNode<Object> implements
 	 * @return
 	 */
 	public double getScore() {
+		
+		double weight = 0.9;
+		
 		if (score == null) {
+			score = 0d;
 			GameState copy = stateObs.copy();
-			for(Action a : path) {
+			for (int i = 0; i < path.size(); i++) {
+				Action a = path.get(i);
 				copy.next(a);
+				weight *= weight;
+				score += (double) eval.getScore(copy) * weight;
 			}
-			score = (double) eval.getScore(copy);
 		}
 		return score;
 	}
@@ -140,7 +146,7 @@ public class EvolutionaryNode extends GenericNode<Object> implements
 	@Override
 	public String toString() {
 		return String.format("Path: %s | score:%s ", Arrays.toString(path.toArray(new Action[path.size()])), score)
-			 + super.toString();
+			 + super.toString() + stateObs.getBoard().toString();
 	}
 
 

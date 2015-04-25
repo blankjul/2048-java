@@ -4,20 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import de.julz.game.ai.evaluation.ExpectationEvaluation;
-import de.julz.game.ai.evaluation.ScoreEvalution;
+import de.julz.game.ai.evaluation.ExpectiMaxEvaluation;
+import de.julz.game.ai.evaluation.PathEvaluation;
 import de.julz.game.model.AbstractPlayer;
 import de.julz.game.model.Action;
 import de.julz.game.model.GameState;
 
 public class GreedyPlayer extends AbstractPlayer {
 	
-	private ExpectationEvaluation eval;
+	private ExpectiMaxEvaluation eval;
 	
 	public GreedyPlayer() {
-		 eval = new ExpectationEvaluation();
+		 eval = new ExpectiMaxEvaluation();
 		 eval.setMaxDepth(4);
-		 eval.setEval(new ScoreEvalution());
+		 eval.setEval(new PathEvaluation());
 	}
 
 	@Override
@@ -25,11 +25,13 @@ public class GreedyPlayer extends AbstractPlayer {
 		
 		List<Action> l = new ArrayList<Action>(actions);
 		int index = 0;
-		double maxScore = Double.MIN_VALUE;
+		double maxScore = Double.NEGATIVE_INFINITY;
 		
 		for (int i = 0; i < l.size(); i++) {
 			Action a = l.get(i);
-			GameState next = state.createNextGameState(a);
+			GameState next = state.copy();
+			next.move(a);
+			// GameState next = state.createNextGameState(a);
 			double currentScore = eval.getScore(next);
 			if (currentScore > maxScore) {
 				index = i;
