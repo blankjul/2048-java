@@ -13,7 +13,7 @@ public class ExpectiMaxEvaluation extends Evaluation {
 
 	private int maxDepth = 1;
 
-	private Evaluation eval = new ScoreEvalution();
+	private Evaluation eval = new PathEvaluation();
 
 	public static double expectiminmax(GameState state, int depth, Evaluation eval, boolean me) {
 		

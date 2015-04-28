@@ -6,7 +6,7 @@ import java.util.Random;
 import java.util.Set;
 
 import de.julz.game.ai.evaluation.Evaluation;
-import de.julz.game.ai.evaluation.PathEvaluation;
+import de.julz.game.ai.evaluation.SnakeEvaluation;
 import de.julz.game.model.AbstractPlayer;
 import de.julz.game.model.Action;
 import de.julz.game.model.GameState;
@@ -26,18 +26,18 @@ public class EvolutionPlayer extends AbstractPlayer {
 	private int populationSize = 20;
 
 	/** number of the best to save for the next generation */
-	private int numFittest = 10;
+	private int numFittest = 5;
 
 	/** number of generations that were applied. */
-	private int numGeneration = 2000;
+	private int numGeneration = 100;
 
 	/** The path size */
-	private int pathLength = 10;
+	private int pathLength = 5;
 	
 	/** the current population */
 	private ArrayList<EvolutionaryNode> population = null;
 	
-	private Evaluation eval = new PathEvaluation();
+	private Evaluation eval = new SnakeEvaluation();
 
 
 	@Override
@@ -71,7 +71,7 @@ public class EvolutionPlayer extends AbstractPlayer {
 
 		ArrayList<EvolutionaryNode> nextPool = new ArrayList<EvolutionaryNode>();
 
-		// save the fittest
+		// save the best
 		Collections.sort(population);
 
 		for (int i = 0; i < numFittest && i < population.size(); i++) {
